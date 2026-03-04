@@ -1,4 +1,5 @@
-# [TailorCV] (https://caleb-gawthroupe.github.io/tailor-cv/)
+# TailorCV
+[Github Pages Link] (https://caleb-gawthroupe.github.io/tailor-cv/)
 
 A full-stack application that leverages AI models (ChatGPT, Claude, Gemini) to automatically tailor LaTeX resumes based on specific job descriptions and target keywords. The backend compiles the generated LaTeX into a PDF, returning both to the user in a seamless, modern interface.
 
