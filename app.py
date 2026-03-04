@@ -111,7 +111,7 @@ class ResumeTailor:
 
 @app.post("/generate")
 @limiter.limit("5/minute")
-async def generate_resume_endpoint(request: GenerateRequest, http_request: Request):
+async def generate_resume_endpoint(payload: GenerateRequest, request: Request):
     """
     FastAPI endpoint that receives the JSON payload from the frontend,
     tailors the resume, and returns the raw LaTeX code.
@@ -123,10 +123,10 @@ async def generate_resume_endpoint(request: GenerateRequest, http_request: Reque
             "claude": "claude",
             "gemini": "gemini"
         }
-        backend_provider = provider_map.get(request.provider.lower(), "openai")
+        backend_provider = provider_map.get(payload.provider.lower(), "openai")
         
-        tailor = ResumeTailor(provider=backend_provider, api_key=request.apiKey)
-        tailored_latex = tailor.generate(request.jobDescription, request.keywords, request.fileContent)
+        tailor = ResumeTailor(provider=backend_provider, api_key=payload.apiKey)
+        tailored_latex = tailor.generate(payload.jobDescription, payload.keywords, payload.fileContent)
         
         # Optionally clean up markdown code block wrappers
         tailored_latex = re.sub(r"```latex|```", "", tailored_latex).strip()
