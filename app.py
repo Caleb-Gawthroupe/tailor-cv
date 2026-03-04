@@ -24,10 +24,9 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Configure CORS
 # Allow requests from any origin for development. 
-# For production on GitHub Pages, change "*" to ["https://your-username.github.io"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://calebgawthroupe.github.io"], 
+    allow_origins=["https://caleb-gawthroupe.github.io"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
