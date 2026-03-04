@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkNest</title>
+  <link rel="stylesheet" href="styles.css?v=6">
+  <script src="anime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+  <!-- Background floating shapes -->
+  <div class="background-shapes">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    <div class="floating-shape shape-4"></div>
+    <div class="floating-shape shape-5"></div>
+    <div class="floating-shape shape-6"></div>
+  </div>
+
+  <!-- Name label in top left -->
+  <div class="name-label" id="name-label">Work<span class="nest-text">Nest</span></div>
+
+  <!-- Central text -->
+  <div class="central-text" id="central-text">
+    <span class="header-black">From Idea to</span>
+    <span class="header-color">Classroom.</span>
+  </div>
+
+  <!-- Input container -->
+  <div class="input-container" id="input-container">
+    <input type="text" class="hint-input" id="worksheet-input" placeholder="Describe your worksheet" />
+    <div id="initial-file-indicator" class="file-indicator hidden">
+      <span class="file-name">context.pdf</span>
+      <button class="remove-file-btn">×</button>
+    </div>
+    <div class="bottom-row">
+      <div class="filters">
+        <select class="filter-select" id="grade-select">
+          <option value="">Grade</option>
+          <option value="1st">1st Grade</option>
+          <option value="2nd">2nd Grade</option>
+          <option value="3rd">3rd Grade</option>
+          <option value="4th">4th Grade</option>
+          <option value="5th">5th Grade</option>
+          <option value="6th">6th Grade</option>
+          <option value="7th">7th Grade</option>
+          <option value="8th">8th Grade</option>
+          <option value="9th">9th Grade</option>
+          <option value="10th">10th Grade</option>
+          <option value="11th">11th Grade</option>
+          <option value="12th">12th Grade</option>
+          <option value="University">University</option>
+        </select>
+        <select class="filter-select" id="type-select">
+          <option value="">Type</option>
+          <option value="Practice">Practice</option>
+          <option value="Quiz">Quiz</option>
+          <option value="Homework">Homework</option>
+          <option value="Review">Review</option>
+          <option value="Test">Test</option>
+        </select>
+        <select class="filter-select" id="subject-select">
+          <option value="">Subject</option>
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="Math">Math</option>
+          <option value="Science">Science</option>
+          <option value="History">History</option>
+          <option value="Geography">Geography</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Physics">Physics</option>
+          <option value="Biology">Biology</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="action-buttons">
+        <input type="file" id="initial-file-input" accept=".pdf" hidden>
+        <button class="icon-btn" id="initial-upload-btn" title="Add PDF Context">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+          </svg>
+        </button>
+        <button class="arrow-btn" id="generate-btn">
+          <span class="arrow-icon">›</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workspace Container (Hidden by default) -->
+  <div class="workspace-container" id="workspace-container">
+    <!-- Left Panel: Chat -->
+    <div class="chat-panel">
+      <div class="chat-header">
+        <h3>AI Assistant</h3>
+        <p>Refine your worksheet</p>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages will be added here -->
+        <div class="chat-bubble ai-bubble">
+          Hi! I'm generating your worksheet. Once it's ready, you can ask me to make changes!
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div id="chat-file-indicator" class="file-indicator small hidden">
+          <span class="file-name">PDF</span>
+          <button class="remove-file-btn">×</button>
+        </div>
+        <input type="file" id="chat-file-input" accept=".pdf" hidden>
+        <button id="chat-upload-btn" class="chat-action-btn" title="Add PDF" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+          </svg>
+        </button>
+        <input type="text" id="chat-input" placeholder="Type a message..." disabled>
+        <button id="send-chat-btn" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Panel: Preview -->
+    <div class="preview-panel">
+      <div class="preview-toolbar">
+        <div class="toolbar-left">
+          <button class="back-btn" id="back-home-btn" title="Back to Home">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <span class="preview-title">Preview</span>
+          <div class="connection-status" id="connection-status" title="Checking connection...">
+            <div class="status-dot"></div>
+            <span class="status-text">Checking...</span>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="toolbar-btn" id="edit-btn">Edit</button>
+          <button class="toolbar-btn primary" id="download-btn" disabled>Download PDF</button>
+        </div>
+      </div>
+      <div class="preview-content" id="preview-content">
+        <div class="loading-state" id="loading-state">
+          <div class="spinner"></div>
+          <p>Generating your worksheet...</p>
+        </div>
+        <iframe id="pdf-viewer" class="pdf-viewer hidden"></iframe>
+        <div id="html-preview" class="html-preview hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor Modal -->
+  <div id="editor-modal" class="editor-modal hidden">
+    <div class="editor-overlay"></div>
+    <div class="editor-container">
+      <div class="editor-header">
+        <div class="editor-title">
+          <h2>Edit Worksheet</h2>
+          <p>Modify the LaTeX code or use the visual editor</p>
+        </div>
+        <div class="editor-tabs">
+          <button class="tab-btn active" data-tab="code">LaTeX Code</button>
+          <button class="tab-btn" data-tab="visual">Visual Editor</button>
+        </div>
+        <button class="close-editor-btn" id="close-editor-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="editor-body">
+        <!-- Code Editor Pane -->
+        <div id="code-pane" class="editor-pane active">
+          <textarea id="latex-source" spellcheck="false" placeholder="Enter LaTeX code here..."></textarea>
+        </div>
+
+        <!-- Visual Editor Pane -->
+        <div id="visual-pane" class="editor-pane">
+          <div class="visual-toolbar">
+            <button class="format-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+            <button class="format-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+            <button class="format-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+            <div class="separator"></div>
+            <button class="format-btn" data-cmd="h1" title="Heading 1">H1</button>
+            <button class="format-btn" data-cmd="h2" title="Heading 2">H2</button>
+            <button class="format-btn" data-cmd="p" title="Paragraph">P</button>
+            <div class="separator"></div>
+            <button class="format-btn" data-cmd="ul" title="Bullet List">• List</button>
+            <button class="format-btn" data-cmd="ol" title="Numbered List">1. List</button>
+          </div>
+          <div id="visual-content" class="visual-content" contenteditable="true"></div>
+          <div class="visual-notice">
+            <p>Note: Visual edits are converted to LaTeX using AI and may not be 100% precise.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-footer">
+        <button class="secondary-btn" id="cancel-edit-btn">Cancel</button>
+        <button class="primary-btn" id="apply-edit-btn">Apply Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MathJax for fallback rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script src="config.js"></script>
+  <script src="script.js?v=4"></script>
+</body>
+
+</html>
