@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             /** * Communication with Backend
              * Note: Ensure your backend endpoint matches '/generate'
              */
-            const response = await fetch('http://127.0.0.1:8000/generate', {
+            const response = await fetch('https://tailor-cv-s9fu.onrender.com/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
