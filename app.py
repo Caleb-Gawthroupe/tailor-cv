@@ -49,10 +49,13 @@ class ResumeTailor:
         self.provider = provider.lower()
         self.api_key = api_key
         self.system_prompt = (
-            "You are a LaTeX expert. Tailor the provided resume LaTeX to match the job description. "
-            "Maintain the exact document structure. Return ONLY the raw LaTeX code. "
-            "Do not include markdown code blocks (```latex) or explanations."
-        )
+        "You are a LaTeX expert. Tailor the provided resume LaTeX to match the job description. "
+        "Maintain the exact document structure and total length; if you add a line or bullet point, "
+        "you must remove or consolidate another to ensure the resume remains the same number of pages. "
+        "Prioritize editing existing lines to incorporate keywords naturally. "
+        "Do not overuse specific keywords; do not use the same target word more than 3 times in the entire document. "
+        "Return ONLY the raw LaTeX code. Do not include markdown code blocks (```latex) or explanations."
+)
 
     def generate(self, job_desc, keywords, base_latex):
         user_content = f"Job Description:\n{job_desc}\n\n"
