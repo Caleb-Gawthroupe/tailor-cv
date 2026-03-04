@@ -19,38 +19,72 @@
         </header>
 
         <form id="tailor-form">
-            <div class="form-group">
-                <label for="provider">Model Provider</label>
-                <select id="provider" name="provider" required>
-                    <option value="" disabled selected>Select a provider</option>
-                    <option value="chatgpt">ChatGPT</option>
-                    <option value="claude">Claude</option>
-                    <option value="gemini">Gemini</option>
-                </select>
+            <!-- 1. Configuration (Proximity) -->
+            <div class="form-section">
+                <h2 class="section-title">1. Setup</h2>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="provider">Model Provider</label>
+                        <select id="provider" name="provider" required>
+                            <option value="" disabled selected>Select a provider</option>
+                            <option value="chatgpt">ChatGPT</option>
+                            <option value="claude">Claude</option>
+                            <option value="gemini">Gemini</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="api-key">API Key</label>
+                        <input type="password" id="api-key" name="apiKey" placeholder="sk-..." required>
+                        <span class="hint-text privacy-note">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Not stored. Used only for this request.
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="api-key">API Key</label>
-                <input type="password" id="api-key" name="apiKey"
-                    placeholder="Enter your API key * NOT STORED BY TAILOR CV *" required>
+            <hr class="divider">
+
+            <!-- 2. Base Resume (Action above the fold) -->
+            <div class="form-section">
+                <h2 class="section-title">2. Base Resume</h2>
+                <div class="form-group">
+                    <label for="resume-file" class="file-upload-label drag-drop-zone">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="upload-icon">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span id="file-name">Upload your current .tex resume</span>
+                    </label>
+                    <input type="file" id="resume-file" name="resumeFile" accept=".tex" required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="job-description">Job Description</label>
-                <textarea id="job-description" name="jobDescription" rows="8"
-                    placeholder="Paste the target job description here..." required></textarea>
-            </div>
+            <hr class="divider">
 
-            <div class="form-group">
-                <label for="keywords">Target Keywords (Optional)</label>
-                <input type="text" id="keywords" name="keywords" placeholder="e.g. React, Python, Leadership">
-            </div>
+            <!-- 3. Target Details -->
+            <div class="form-section">
+                <h2 class="section-title">3. Target Details</h2>
+                <div class="form-group">
+                    <label for="job-description">Job Description</label>
+                    <textarea id="job-description" name="jobDescription" rows="6"
+                        placeholder="Paste the target job description here..." required></textarea>
+                </div>
 
-            <div class="form-group">
-                <label for="resume-file" class="file-upload-label">
-                    <span id="file-name">Upload resume (.tex)</span>
-                </label>
-                <input type="file" id="resume-file" name="resumeFile" accept=".tex" required>
+                <div class="form-group">
+                    <label for="keywords">Target Keywords (Optional)</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="Enter target keywords...">
+                    <span class="hint-text">e.g. React, Python, Leadership</span>
+                </div>
             </div>
 
             <button type="submit" id="submit-btn">Generate Tailored Resume</button>
