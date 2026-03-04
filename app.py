@@ -151,12 +151,23 @@ async def generate_resume_endpoint(payload: GenerateRequest, request: Request):
 def compile_to_pdf(latex_code):
     """
     Sends LaTeX code to a remote compilation API and returns the PDF bytes.
+    Uses texlive.net since texapi is unavailable.
     """
-    print("Compiling LaTeX to PDF...")
-    url = "https://texapi.ovh/compile"
-    response = requests.post(url, json={"latex": latex_code})
+    print("Compiling LaTeX to PDF via texlive.net...")
+    url = "https://texlive.net/cgi-bin/latexcgi"
     
-    if response.status_code == 200:
+    files = {
+        'filecontents[]': ('document.tex', latex_code),
+        'filename[]': (None, 'document.tex'),
+        'engine': (None, 'pdflatex'),
+        'return': (None, 'pdf')
+    }
+    
+    response = requests.post(url, files=files)
+    
+    if response.status_code == 200 and response.content.startswith(b'%PDF'):
         return response.content
     else:
-        raise Exception(f"PDF compilation failed: {response.text}")
+        # If it failed, it might have returned HTML or a text error
+        error_msg = response.text[:500] if response.text else "Empty response"
+        raise Exception(f"PDF compilation failed. Status: {response.status_code}, Error: {error_msg}")
