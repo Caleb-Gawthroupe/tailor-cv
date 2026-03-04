@@ -88,7 +88,7 @@ class ResumeTailor:
         key = self.api_key if self.api_key else os.getenv("ANTHROPIC_API_KEY")
         client = anthropic.Anthropic(api_key=key)
         response = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-4-6",
             max_tokens=4000,
             system=self.system_prompt,
             messages=[{"role": "user", "content": content}]
