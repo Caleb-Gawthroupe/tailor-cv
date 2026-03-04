@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TailorCV</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>TailorCV</h1>
+            <p>Customize your resume for any job.</p>
+        </header>
+
+        <form id="tailor-form">
+            <div class="form-group">
+                <label for="provider">Model Provider</label>
+                <select id="provider" name="provider" required>
+                    <option value="" disabled selected>Select a provider</option>
+                    <option value="chatgpt">ChatGPT</option>
+                    <option value="claude">Claude</option>
+                    <option value="gemini">Gemini</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="api-key">API Key</label>
+                <input type="password" id="api-key" name="apiKey"
+                    placeholder="Enter your API key * NOT STORED BY TAILORCV *" required>
+            </div>
+
+            <div class="form-group">
+                <label for="job-description">Job Description</label>
+                <textarea id="job-description" name="jobDescription" rows="8"
+                    placeholder="Paste the target job description here..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="keywords">Target Keywords (Optional)</label>
+                <input type="text" id="keywords" name="keywords" placeholder="e.g. React, Python, Leadership">
+            </div>
+
+            <div class="form-group">
+                <label for="resume-file" class="file-upload-label">
+                    <span id="file-name">Upload resume (.tex)</span>
+                </label>
+                <input type="file" id="resume-file" name="resumeFile" accept=".tex" required>
+            </div>
+
+            <button type="submit" id="submit-btn">Generate Tailored Resume</button>
+        </form>
+
+        <div id="status-area" class="status-container hidden">
+            <div class="spinner hidden" id="loading-spinner"></div>
+            <p id="status-message"></p>
+        </div>
+
+        <div id="result-area" class="result-area hidden">
+            <h2>Generated Resume</h2>
+            <div class="result-actions">
+                <button id="download-pdf-btn" type="button">Download PDF</button>
+                <button id="download-tex-btn" type="button" class="btn-secondary">Download .tex</button>
+            </div>
+            <iframe id="pdf-viewer" title="PDF Preview"></iframe>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
